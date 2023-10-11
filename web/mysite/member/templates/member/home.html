@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>안녕하세요. 시작페이지입니다.</h2>
+
+<form method="post" action="/member/join">
+{% csrf_token %}
+<table>
+    <tr>
+        <td>아이디</td>
+        <td>
+            <input type="text" name="userid">
+        </td>
+    </tr>
+
+    <tr>
+        <td>비밀번호</td>
+        <td>
+            <input type="password" name="userpw">
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="right">
+            <input type="submit" value="로그인">
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="left">
+            <a href="/member/join">회원가입</a>
+<!--            <input type="button" value="회원가입" onclick="location.href='/member/join.html/'">-->
+        </td>
+    </tr>
+</table>
+</form>
+
+</body>
+</html>

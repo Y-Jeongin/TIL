@@ -1,0 +1,32 @@
+2023-09-08
+
+Python with Web Framework : Django
+
+
+1. intro
+  1) Frame work(프레임워크) : Flask vs Django
+  2) IDE : Pycharm, atom, vc, sublinetext, ….
+     Anaconda : 포함(python), numpy, pandas, matplotlib, ….
+
+2. Pycharm 다운로드 및 설치
+  - 2022.3.3. 버전 다운로드
+  - https://www.jetbrains.com/ko-kr/pycharm/download/other.html
+
+
+3. anaconda 가상환경 생성과 필요 패키지 설치
+  1) 아나콘다 가상환경 - web 작업을 하는 공간을 설정
+    - conda list
+    - conda env list (base)
+
+    - pip install 패키지명
+      conda install 패키지명
+
+    - 설치 가능한 파이썬 버전 학인
+      conda search python
+
+    - 가상환경 설정 : web
+      conda env list
+
+      conda create -n web python = 3.9
+
+      pip install django

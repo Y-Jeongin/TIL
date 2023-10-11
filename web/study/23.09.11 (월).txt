@@ -1,0 +1,83 @@
+2023.09.11 (월)
+
+web 프로젝트 : source 폴더를 이용하여 프로젝트를 담는다.
+1. 장고 프로젝트 => 어플리케이션 프로젝트
+2. python compiler => anaconda web
+3. pycharm 설치 2022.3.3.
+4. anaconda prompt 관리자 권한을 실행한 후
+   새로운 가상환경 생성 : web python=3.9
+   conda create -n web python=3.9
+5. activate web
+   (base) => (web) pip install django
+
+python with web framework : django
+1. Django
+ - 파이썬 기반의 무료 오픈소스 웹 어플리케이션 프레임워크
+ - 장점:
+   - 파이썬 기반의 프레임워크라 배우기 쉽다.
+   - 빠른 개발 속도, 개발 비용 절감
+   - 사용자 인증, 사용작 관리 등의 기능이 기본적으로 구현되어있다.
+   - 성공적인 도입 사례 : instagram
+   - MTV pattern
+     - Model : 데이터베이스 관련 코드를 처리하는 영역, ORM 방식
+     - Template : 사용자가 보는 화면을 정의하는 코드를 기술하는 영역
+     - View : 데이터를 처리한 후 결과를 템플릿에 전달하는 역할을 담당
+
+2. Django 설치
+ - Anaconda Prompt에서 실행
+   (web) pip install django
+
+3. 프로젝트 만들기 : myweb
+   - 장고 프로젝트 django-admin startproject config .
+
+   - 슈퍼 유저 생성
+     python manage.py migrate
+     python manage.py createsuperuser : id/pass/email
+
+   - 어플리케이션 프로젝트
+     python manage.py startapp address
+
+
+   1) window powshell 관리자 권한으로 실행
+      get-help Set-ExecutionPolicy
+      Y 선택
+      Set-ExecutionPolicy RemoteSigned
+      A
+
+   2) 주소록 application
+     - 슈퍼 유저 : 관리자 계정 생성
+       python manage.py makemigrations : 변경된 내용 수집하는 명령
+
+       - 처음 실행할 때
+       python manage.py migrate : db 반영(commit)
+
+     - 슈퍼유저 생성
+       python manage.py createsuperuser
+       아이디(admin)와 비밀번호(a12341234) 그리고 이메일주소(생략 가능)
+
+  3) 새로운 어플리케이션 생성
+     python manage.py startapp address
+     myweb 프로젝트
+	config
+	   address
+
+  4) 주소록(address) : address_address db에 테이블이 자동생성된다.
+   - 새로운 테이블을 생성하려면 models.py파일과 admin.py 2개의 파일을 수정
+   - modles.py : 테이블 정의
+   - admin.py : models.py에 등록한 테이블이 admin 사이트에 보이도록 처리한다.
+     from address.models import Address
+
+     class AddressAdmin(admin.ModelAdmin):
+	# 관리자 화면에서 표시할 내용을 튜플로 등록
+	list_display = ('name', 'tel', 'email', 'address')
+
+     # 두 개의 클래스를 등록하고 연결하는 작업
+     admin.site.register(Address, AddressAdmin)
+
+
+     class Address(models.Model):
+	idx = models.AutoField(primary_key = True)
+	name = models.CharField(max_length = 50, blank = True, null = True)
+	tel = models.CharField(max_length = 50, blank = True, null = True)
+	email = models.CharField(max_length = 50, blank = True, null = True)
+	address = models.CharField(max_length = 500, blank = True, null = True)

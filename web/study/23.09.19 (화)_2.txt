@@ -1,0 +1,39 @@
+2023.09.19. (화)
+
+한 줄 메모장(방명록) application
+
+
+1. web programming 작업 진행 순서
+   web project : myweb
+     django project : config
+	web application : 1) address (주소록)
+			  2) memo (방명록)
+
+
+2. memo application 생성
+   python manage.py startapp memo
+
+   1) config/settings.py
+
+
+3. django-debug-toolbar : 디버그 모드 지원하는 어플리케이션
+   1) 개발자에게 디버그 모드는 필수이다.
+
+
+4. 설문조사 : 문제에 대한 선택값을 관리
+
+   객체명.objects.get() : 쿼리에 만족하는 데이터 1개만 추출
+
+   객체명.objects.all() or 객체명.objects.values() : 전체 데이터를 불러온다.
+
+   객체명.objects.filter() : 조건에 만족하는 여러개의 데이터 추출, 10개씩
+
+
+5. 방명록 : guestbook
+   1) 테이블
+   - 글번호 : 식별값, 자동
+   - 작성자
+   - 방명록 내용
+   - 작성일
+   - 비밀번호
+   - 이메일

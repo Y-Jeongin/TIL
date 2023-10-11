@@ -1,0 +1,31 @@
+2023-09-20 (수)
+회원가입과 로그인
+
+1. 어플리케이션 생성 : member
+   - Meta 클래스 : 클래스내에 구현하는 또 다른 클래스
+
+   가변길이 매개변수 : *변수, **변수:사전
+   def test(*args):
+	print(a, b, c)
+
+   test(name, pass, email, address):
+	print(name, pass)
+
+   test(**user):
+
+
+2. 어플리케이션 생성 : account - 회원관리를 위한 어플리케이션
+   회원 : 아이디(userid), 비밀번호(userpw), 이름(username)
+   1) 회원 가입(join) => join.html
+   2) 로그인(login) => login.html
+   3) 회원 인증 처리(login_check)
+   4) 회원 전용 페이지(member) => member.html
+      로그인시 : 로그아웃 버튼
+      로그인을 하지 않을 경우 : 로그인을 하라는 메시지
+
+
+3. 쇼핑몰 관리 : 상품 관리 프로젝트
+   1) 어플리케이션 : app
+   2) 테이블
+     - 상품 관리 테이블(Product) : 상품번호, 상품명, 상품가격, 상품설명, 상품이미지
+     - 장바구니 관리 테이블(Cart) : 장바구니 번호, 회원 아이디, 상품 아이디, 수량

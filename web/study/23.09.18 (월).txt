@@ -1,0 +1,97 @@
+2023.09.18. (월)
+python with web programming : Django Project
+
+1. 공식 문서
+   docs.djangoproject.com
+
+
+2. MTV
+  1) MVC pattern : 웹을 개발하는 일련의 절차 또는 과정
+     - Model : 단순히 데이터를 관리할 목적으로 생성하는 객체
+     - View : 사용자에게 보여줄 목적으로 구현하는 객체
+     - Controller : Model과 View를 제어할 목적으로 구현하는 객체
+
+  2) MTV pattern : python 기반의 웹 개발
+     - Model : 데이터베이스를 활용(테이블)
+     - Template : MVC의 View 역할, 템플릿(HTML, CSS, Javascript, ….
+     - View : Controller의 역할
+
+
+3. Project 개발과정(순서)
+   1) Web Project : myweb
+      - pycharm 실행 후 생성(반드시 관리자 권한으로 실행해야 한다.)
+
+      2) Django Project : config
+	 - pycharm의 터미널에서 실행
+	   django-admin startproject config .(마침표를 찍지 않으면 경로가 달라진다.)
+	   자동으로 생성되는 파일 중 manage.py : 유틸리티 파일
+
+	   python manage.py makemigrations : 변경내용 수집
+
+	   python manage.py migrate : 수집된 내용을 DB에 반영(commit)
+
+	 - 관리자 사이트 생성 : superuser - 슈퍼유저 생성
+	   python manage.py migrate
+
+	   python manage.py createsuperuser
+	   id(admin), password(1234), email(생략) 등록
+
+	 - 현재까지 작업을 웹에서 확인하는 작업 : 웹서버 실행 후 확인
+	   python manage.py runserver localhost:80
+
+	3) App Project
+	   - 주소록을 관리할 목적으로 구현하는 App : address
+	      python manage.py startapp address
+
+	    ① 일련번호(식별값), 이름, 연락처, 주소, 이메일
+		테이블 생성
+		create table address(
+		   idx number primary key,
+		   name varchar2(50) not null,
+		   …
+		); → Oracle 스타일, db 직접 접근
+
+	    ② address/models.py
+		- 주소록을 관리할 테이블을 클래스로 정의하는 파일
+		- 테이블을 새로 만들려면 models.py와 admin.py(관리자 사이트) 2개의 파일 수정
+		- ORM 기법을 사용 : 테이블을 클래스로 관리하는 작업
+		  하나의 테이블은 하나의 클래스로 정의하고,
+		  테이블의 컬럼은 클래수의 변수로 매핑하고,
+		  테이블의 클래스는 django.db.models.Model 클래스를 상속받아 구현,
+		  변수의 자료형도 django에서 미리 정의한 자료형을 사용한다.
+		- 내부적으로 DB안에 app명-클래스명, address_address라는 테이블
+		- 작업완료 후 반드시 관리자 사이트에 등록하는 작업을 수행한다.
+
+	    ③ address/admin.py
+		from address.models import Address 추가
+
+		class AddressAdmin(admin.ModelAdmin):
+		   # 관리자 사이트에 표시할 내용을 튜플로 목록 지정
+		   list_display = ('name', 'tel', 'eamil', 'address')
+
+		admin.site.register(Address, AddressAdmin)
+
+	    ④ 지금까지의 작업을 DB에 반영하는 작업
+		python manage.py makemigrations : 변경 내용 수집
+		python manage.py migrate : 변경 내용 DB에 반영
+
+	    ⑤ 웹서버 실행
+		python manage.py runserver localhost:80
+
+
+4. urls.py
+  1) client vs server
+    - client : 정보를 요청하는 쪽
+    - server : 정보를 제공(응답)하는 쪽
+    - 서로 간의 통신을 하는 프로토콜은 http로 주소 통신한다.
+
+  2) 쿠키(cookie) vs 세션(session)
+    - cookie : 클라이언트 pc에 저장
+    - session : 서버에 저장
+
+  3) POST vs GET : 전송 방식
+    - GET 방식 : URL에 데이터가 노출, 데이터 길이에 제한, 보안에 취약
+    - POST 방식 : 노출되지 않음(암호화처리), 보안에 강함, django 주로 사용
+
+  4) URL : 프로토콜 + 도메인(호스트) + 경로 + 쿼리
+     http://www.naver.com/in3.html?a=100 (GET방식)
