@@ -1,0 +1,65 @@
+#원하는 것은 title에서 자주 보이는 표현, 단어들
+#어떤 것에 대한 영상인지를 막론하고
+#제목을 짓는 방식에 초점을 맞춘다.
+
+#텍스트 데이터에서 단어를 추출하고,
+#단어의 추출 빈도수를 분석하는 텍스트 마이닝 기법 사용
+
+install.packages('tidytext') #텍스트 마이닝 패키지
+install.packages('tidyr')
+library(tidytext)
+library(tidyr)
+library(dplyr)
+library(stringr)
+
+Ytitle <- Youtube$title
+
+Ytitle <- as_tibble(Ytitle) # dataframe과 유사한 구조인 tibble로 변환.
+
+str(Ytitle$value)  #값들은 value에 저장되어 있음
+
+word <- Ytitle %>%
+  unnest_tokens(input = value, # 토큰화할 텍스트
+                output =  words, #출력 변수명
+                token = "words")  #나누는 기준
+
+#내가 넣은 token 옵션은 연속된 n개의 글자를 기준으로 추출하라는뜻
+
+# 문장: sentences,
+# 띄어쓰기: words
+# 글자 기준: characters
+
+word <- word %>%
+  count(words, sort = T)
+
+print(word, n= 100) #띄어쓰기 단위로 빈도별 정렬
+
+### 
+
+character3 <- Ytitle %>%
+  unnest_tokens(input = value, # 토큰화할 텍스트
+                output =  char3, #출력 변수명
+                token = "character_shingles", n = 3)
+
+character3 <- character3 %>%
+  count(char3, sort = T)
+
+print(character3, n= 100) #띄어쓰기를 고려안한 3개의 글자들의 빈도별 정렬
+
+#--------------------------여기서부턴 tag------------------------------
+
+head(Youtube$tags)
+
+tagss <- Youtube$tags
+
+tagss <- as_tibble(tagss)
+
+unique_taggers <- tagss %>%
+  mutate(tokenized = strsplit(value, "\\|")) %>%
+  unnest(tokenized) %>%
+  distinct()
+
+unique_taggers <- unique_taggers %>%
+  count(tokenized, sort = T)
+
+print(unique_taggers, n = 100)

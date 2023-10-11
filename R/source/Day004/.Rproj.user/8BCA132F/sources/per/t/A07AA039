@@ -1,0 +1,27 @@
+{
+    "id": "A07AA039",
+    "path": "C:/K_digital/R/source/Day004/_03.dplyr.R",
+    "project_path": "_03.dplyr.R",
+    "type": "r_source",
+    "hash": "1843475227",
+    "contents": "",
+    "dirty": false,
+    "created": 1690860695145.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "271,11",
+        "scrollLine": "0"
+    },
+    "folds": "87|2|88|8|\n89|2|144|0|\n145|2|146|17|\n147|2|211|0|\n212|2|237|2|\n238|2|239|18|\n",
+    "lastKnownWriteTime": 1690879578,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1690879578412,
+    "read_only": false,
+    "read_only_alternatives": []
+}

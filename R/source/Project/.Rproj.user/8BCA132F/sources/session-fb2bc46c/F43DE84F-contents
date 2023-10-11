@@ -1,0 +1,178 @@
+KR <- read.csv('C:/K_digital/data/KR_youtube_trending_data.csv', header = T)
+youtube <- KR[, 1:12]
+summary(youtube)
+View(youtube)
+
+# Youtube$categoryId <- as.factor(Youtube$categoryId)
+
+# youtube$categoryId <- as.factor(youtube$categoryId)  # categoryId 팩터 변환
+# category$categoryId <- as.factor(category$categoryId)
+# youtube <- left_join(youtube, category, by = 'categoryId')
+
+# summary(Youtube$categoryId)
+# n_distinct(youtube$categoryId)
+
+# summary(category$categoryId)
+# n_distinct(category$categoryId)
+
+# table(is.na(youtube$snippet.title))
+
+
+View(Youtube)
+
+nrow(Youtube)
+ncol(Youtube)
+
+read.csv()
+
+library(dplyr)
+
+nrow(KR)
+summary(KR)
+
+youtube <- Youtube
+
+write.csv(youtube, file = 'youtube.csv', row.names = F )
+
+Youtube <- KR[, 1:12]
+Youtube
+
+
+
+
+# ----------------------------------------------------------------------------------------------
+# 데이터 합치기 category_name
+category <- read.csv(file = 'C:/K_digital/data/KR_category_id.csv', header = T)
+category$categoryId <- category$id
+category <- category[, c(4, 7)]
+category
+
+Youtube <- left_join(Youtube, category, by = 'categoryId')
+View(Youtube)
+
+summary(Youtube)
+table(is.na(Youtube$snippet.title))
+
+
+na <- Youtube %>% 
+  filter(is.na(Youtube$snippet.title)==TRUE) %>% 
+  select(categoryId, snippet.title, title) 
+
+View(na)
+
+Youtube <- Youtube %>% 
+  filter(!is.na(snippet.title))  # 카테고리명 결측값 제거
+
+Youtube <- Youtube %>% 
+  arrange(video_id, desc(trending_date))
+
+Youtube <- distinct(test, video_id, .keep_all = T)
+View(test)
+
+# ----------------------------------------------------------------------------------------------
+# 조회수를 기준으로 좋아요|싫어요의 비율 추출
+## 평균 좋아요|싫어요 보다 높은 비율의 영상 추출
+### 좋아요|싫어요의 카테고리별 동영상 수 / 카테고리별 전체동영상 수 
+### → 좋아요|싫어요 비율이 높은 동영상 카테고리 추출
+#### 비율이 높은 카테고리별 동영상의 제목 분석
+
+# likes / View_count  좋아요 비율, dislikes / View_count 싫어요 비율
+Youtube$likes_prop <- round(Youtube$likes / Youtube$view_count * 100, 2)
+Youtube$dislikes_prop <- round(Youtube$dislikes / Youtube$view_count * 100, 2)
+
+str(Youtube)
+
+Youtube <- Youtube %>% 
+  filter(!view_count == 0)  # 이상치 발생하여 view_count 0인 값 제거
+
+dislikes <- distinct(arrange(Youtube, desc(dislikes_prop)), video_id, .keep_all = T)
+# 싫어요 비율이 높은 순서대로 정렬한 데이터 중 중복되는 video_id를 제거
+
+likes <- distinct(arrange(Youtube, desc(likes_prop)), video_id, .keep_all = T)
+# 좋아요 비율이 높은 순서대로 정렬한 데이터 중 중복되는 video_id를 제거
+
+View(dislikes)
+View(likes)
+
+summary(dislikes)
+summary(likes)
+
+summary(dislikes$dislikes_prop)  # 싫어요 3분위  0.05
+summary(likes$likes_prop)  # 좋아요 3분위  4.17
+
+dislikes_cate <- dislikes %>% 
+  filter(dislikes_prop > 0.05) %>% 
+  select(title, channelTitle, snippet.title)  # 3분위보다 높은 싫어요 비율을 가진 동영상 추출
+
+likes_cate <- likes %>% 
+  filter(likes_prop > 4.17) %>% 
+  select(title, channelTitle, snippet.title)  # 3분위보다 높은 좋아요 비율을 가진 동영상 추출
+
+table(dislikes_cate)
+table(likes_cate)
+
+
+library(ggplot2)
+
+a <-  dislikes_cate %>% 
+  group_by(snippet.title) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))  # 싫어요 동영상의 카테고리 빈도수 추출
+
+ggplot(a, aes(x=reorder(snippet.title, n), y = n)) + geom_col() + coord_flip()
+
+
+# dislikes_cate %>% 
+#   group_by(channelTitle) %>% 
+#   summarise(n = n()) %>% 
+#   arrange(desc(n))
+
+
+b <- likes_cate %>% 
+  group_by(snippet.title) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))  # 좋아요 동영상의 카테고리 빈도수 추출
+
+ggplot(b, aes(x=reorder(snippet.title, n), y = n)) + geom_col() + coord_flip()
+
+# likes_cate %>% 
+#   group_by(channelTitle) %>% 
+#   summarise(n = n()) %>% 
+#   arrange(desc(n))
+
+
+dislikes_cate %>% filter(snippet.title == 'Science & Technology') %>% View()  # 카테고리명에 따른 제목 추출
+
+
+c <- Youtube %>% 
+  group_by(snippet.title) %>% 
+  summarise(n = n()) %>% 
+  arrange(snippet.title)  # 카테고리별 전체동영상 수
+
+d <-  dislikes_cate %>% 
+  group_by(snippet.title) %>% 
+  summarise(dis = n()) %>% 
+  arrange(snippet.title)  # 카테고리별 싫어요 동영상 수
+
+prop_dis <- left_join(c, d, by = 'snippet.title')
+prop_dis
+
+prop_dis$prop <- round(prop_dis$dis / prop_dis$n * 100, 2)
+disl <- arrange(prop_dis, desc(prop))  # 카테고리별 전체 동영상 대비 싫어요 비율이 높은 순서
+
+ggplot(disl, aes(x = reorder(snippet.title, prop), y = prop)) + geom_col() + coord_flip()
+
+
+e <-  likes_cate %>% 
+  group_by(snippet.title) %>% 
+  summarise(likes = n()) %>% 
+  arrange(snippet.title)  # 카테고리별 좋아요 동영상 수
+
+prop_likes <- left_join(c, e, by = 'snippet.title')
+prop_likes
+
+prop_likes$prop <- round(prop_likes$likes / prop_likes$n * 100, 2)
+l <- arrange(prop_likes, desc(prop))  # 카테고리별 전체 동영상 대비 좋아요 비율이 높은 순서
+
+ggplot(l, aes(x = reorder(snippet.title, prop), y = prop)) + geom_col() + coord_flip()
+

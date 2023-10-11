@@ -1,0 +1,22 @@
+23.08.03 (목) R 작업 플랫폼 변경
+
+RStudio → Anaconda jupyter Notebook 환경으로 변경
+
+1. R 최신상태로 업데이트 작업
+2. C드라이브에 Anaconda3 라는 폴더를 생성
+3. Anaconda 설치 - 파이썬3 포함
+	C:\Anaconda3\python.exe C:\Anaconda3\cwp.py C:\Anaconda3 C:\Anaconda3\python.exe C:\Anaconda3\Scripts\jupyter-notebook-script.py "C:\K_digital\R\source\Ana/"
+4. jupyter Notebook에 R을 연동시키는 라이브러리 설치
+	Anaconda prompt에서 conda install -c r r-essentials
+5. R 실습 - 교재위주
+
+1차 프로젝트
+08.18(금) ~
+08.25(금) : 오전 - 보고서 및 발표자료(PPT) 제출 / 오후 - 발표
+
+step1. 기안서작성(A4 1장) - 8월 17일 제출
+ 1) 프로젝트명 (주제)
+ 2) 주제 선정 이유
+ 3) 팀 - 팀명 / 구성원 / 역할
+ 4) 주요 기능 - 어떤 목적, 기능, 역할, 향후 기대효과
+ 5) 진행 절차

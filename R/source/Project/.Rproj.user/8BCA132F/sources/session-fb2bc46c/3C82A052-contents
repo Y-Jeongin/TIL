@@ -1,0 +1,40 @@
+KR <- read.csv('C:/K_digital/data/KR_youtube_trending_data.csv', header = T)
+
+Youtube <- read.csv(file = 'C:/K_digital/data/Youtube.csv', header = T)
+View(Youtube)
+
+nrow(Youtube)
+ncol(Youtube)
+
+read.csv()
+
+library(dplyr)
+
+nrow(KR)
+summary(KR)
+
+vars <- c('thumbnail_link', 'comments_disabled', 'ratings_disabled', 'description' )
+vars
+youtube <- KR[, 1:12]
+youtube
+
+nrow(youtube)
+
+
+write.csv(youtube, file = 'youtube.csv', row.names = F )
+
+# ----------------------------------------------------------------------------------------------
+# 파생변수 생성 category_name
+category <- read.csv(file = 'C:/K_digital/data/KR_category_id.csv', header = T)
+category$categoryId <- category$id
+category[, c(4, 7)]
+
+Youtube$category_name <- 
+
+
+
+view_rank <- arrange(Youtube, desc(view_count))
+head(view_rank, 30)
+
+View(view_rank %>% group_by(title))
+if(video_id == video_id, 

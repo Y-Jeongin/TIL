@@ -1,0 +1,63 @@
+# 1. 인기 채널과 카테고리
+channel <- distinct(Youtube, channelTitle)  
+channel  # 전체 채널 목록
+
+channel_view <- Youtube %>%  # 채널 별 평균 조회수
+  group_by(channelTitle) %>%
+  summarise(mean_view = mean(view_count))
+
+View(channel_view)
+
+ch_category <- Youtube %>%   # 채널 별 카테고리
+  select(channelTitle, categoryId, snippet.title)
+
+unique_ch_category <- ch_category %>%
+  distinct(channelTitle, .keep_all = TRUE)
+
+table(is.na(unique_ch_category))  ### 결측값 없음
+
+channel_view <- left_join(channel_view, unique_ch_category,
+                          by = "channelTitle")   ## 채널 별 평균 조회수와 카테고리 
+
+channel_view <- arrange(channel_view, desc(mean_view))  ## 조회수 높은 순 정렬
+View(channel_view)
+
+cate_mean_view <- channel_view %>%   # 카테고리 별 평균 조회수
+  group_by(snippet.title) %>%
+  summarise(view = mean(mean_view))
+arrange(cate_mean_view, desc(view))
+
+ggplot(cate_mean_view,  ## 시각화
+       aes(x=reorder(snippet.title, view), y=view)) +
+  geom_col() +
+  coord_flip()
+
+# 2. 연도별 트렌드 키워드
+## 2020년 인기 영상
+Y2020 <- Youtube %>%
+  filter(substring(trending_date, 1,4) == "2020")
+View(Y2020)
+Y2020 <- arrange(Y2020, desc(view_count))
+Y2020 <- Y2020 %>%
+  distinct(video_id, .keep_all = TRUE)
+nomusic2020 <- Y2020 %>%   ## 카테고리가 music인 행 제거
+  filter(!categoryId == 10)
+
+# 2020년 키워드  ## MUSIC, MV 제외
+iphone12
+League of Legeonds
+The Batman - DC FanDome Teaser
+WandaVision | Official Trailer | Disney+
+  First 2020 Presidential Debate between Donald Trump and Joe Biden
+Exclusive Clip | Loki | Disney+
+  가짜사나이
+싱어게인
+어몽어스
+쇼미더머니9
+보겸
+2020년 채널 별 평균 조회수
+channel2020 <- Y2020 %>%  
+  group_by(channelTitle) %>%
+  summarise(view = mean(view_count))
+channel2020 <- arrange(channel2020, desc(view))
+View(channel2020)

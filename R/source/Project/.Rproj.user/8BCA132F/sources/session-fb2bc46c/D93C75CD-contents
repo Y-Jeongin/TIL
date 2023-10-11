@@ -1,0 +1,24 @@
+library(readxl)
+SK <- read_excel('C:/K_digital/data/sk.xlsx')
+View(SK)
+
+sk <- SK[, c('행정동코드', '성별', '연령대', '총인구수', '유튜브 사용 미추정 인구수', '유튜브 사용일수', '유튜브 사용일수: 4분위수, 25%', '유튜브 사용일수: 4분위수, 50%', '유튜브 사용일수: 4분위수, 75%')]
+View(sk)
+sk
+
+sk$sex <- sk$성별
+sk$age <- sk$연령대
+sk$youtube <- sk$`유튜브 사용일수`  # 변수명 변경
+
+# 유튜브 사용일수는 z-score(표준값)
+## 유튜브 사용 미추정 인구수가 존재함... 제외해야 하는지? 제외하고 평균값이 나온건지?
+### 유튜브 사용일수 = 3개월 평균 사용일수(23년 3-5월)
+#### 서울만
+
+as <- sk %>% 
+  group_by(sex, age) %>% 
+  summarise(sum = sum(youtube)) %>% 
+  arrange(desc(sum)) # 성별과 나이대별에 따른 유튜브 사용일수
+
+ggplot(as, aes(x = age, y = sum, fill = sex)) + geom_col()
+
