@@ -1,0 +1,28 @@
+<HTML>
+
+  <HEAD>
+    <TITLE> 페이지 제목 </TITLE>
+    <META> 정보를 제공할 목적 </META>
+    <script> : javascript - 동적인 웹페이지 구현
+    <style> : css - html 페이지를 꾸며주는 속성을 가지고 있는 파일
+  </HEAD>
+
+  <BODY>
+    <header>
+	<top>
+	<nav>
+    </header>
+    <content>
+    </content>
+    <side>
+    </side>
+    <footer>
+    </footer>
+  </BODY>
+
+</HTML>
+
+
+
+프로젝트 오일러 : https://projecteuler.net/
+한글 사이트 : https://euler.synap.co.kr

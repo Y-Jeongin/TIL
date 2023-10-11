@@ -1,0 +1,69 @@
+23.08.23 (수)
+파이썬 자료구조
+
+데이터(자료) : 수치형, 비수치형(문자열)
+기본자료형 - 정수형, 실수형, 복소수형, 논리형, 문자열형
+변수
+
+1. 리스트 : List
+  - sequency dataType : 순서대로 데이터를 담고 처리하는 자료형
+    대표적인 함수
+    R에서 seq()와 동일한 함수 : range()
+    seq(from = 1, to = 10, by = 1)  == seq(10)
+    range(1, 10) : 1 ~ 9
+    range(10) : 0 ~ 9
+
+  - 인덱스(index)를 통해 데이터를 처리, 인덱스(위치)는 0부터 시작된다.
+  - 생성 : []
+    빈 리스트 생성 a = [] or a = list()
+  - R에서 Vector 자료형과 유사
+  - 1차원 배열(크기가 정해져 있지 않은 가변배열)
+  - 변경가능
+
+2. 튜플 : Tuple
+  - List와 유사한 자료구조
+  - List와 유일하게 다른 점은 변경이 불가능한 자료구조라는 것, Read Only, Write Once Read Only
+    ROM(Read Only Memory)과 RAM(Read/Write) => 주기억장치
+    => POST(Power-on Self Test) : 자가 진단 프로그램
+    => ROM-BIOS 부팅 관련
+    => Font
+
+  - 생성 : ()
+    빈 튜플 생성 a = () or a = tuple()
+
+3. 집합(세트) : Set
+  - sequency dataType : 순차적인 자료구조
+  - 순서에 의미가 없다. => 인덱스 없이 값만 저장되는 자료구조
+  - 중복이 불가능한 자료구조
+  - 생성 : {}
+    빈 집합 생성 a = {} or a = set()
+
+4. 사전 : Dictionary
+  - 파이썬에서 가장 많이 사용되는 자료구조
+  - 키(key)와 값(value)을 쌍(item)으로 저장하는 자료구조
+  - 별도의 인덱스 없이 키(key)가 인덱스의 역할을 수행한다.
+  - 키는 중복을 허용하지 않는다.
+  - 생성 : {}
+    빈 사전 생성 a = dict()
+  - 주요 함수
+    dic = dict()  # 빈 사전 생성
+    dic.keys()  # key만 추출하는 함수
+    dic.values()  # value만 추출하는 함수
+    dic.items  # item별로 추출하는 함수
+    keys(), values(), items()가 반환하는 자료형은 리스트이다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
