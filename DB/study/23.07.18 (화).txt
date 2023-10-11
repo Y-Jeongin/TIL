@@ -1,0 +1,90 @@
+2023.07.18 (화)
+
+adsp > 빅데이터 분석기사 > 정보처리기사
+
+bit(컴퓨터가 처리할 수 있는 최소 단위, 0/1)
+→ byte(=8bit) 
+→ word 
+→ field(=item, cloumn, attribute, feature) 
+→ record(=tuple, row) 
+→ block 
+→ file(컴퓨터에 저장되는 최소 단위) 
+→ database
+
+
+RDBMS : Relation Database Managerment System, 관계형 데이터베이스 관리 시스템
+- 관계형 데이터베이스의 기본 구조 테이블(table, 표)
+- 표는 행과 열로 구성
+- 행 : Tuple, Record, Row
+- 열 : Attribute, Field, Column, Feature(피처), 속성
+
+
+Oracle 11g Express Edition(XE) + SQL Developer
+- SQL 명령어와 SQL*PLUS 
+- SQL 명령어 : query(쿼리, 질의어), ISO 표준
+   DDL(정의어) - 데이터베이스의 구조를 생성하고 변경하고 제거하는 작업을 수행하는 명령어
+		CREATE(생성), ALTER(변경), DROP(제거)
+   DML(조작어) - 실제 데이터베이스에 접근하여 사용하는 명령어, 일반적인 개발자가 사용하는 명령어(CRUD)
+		INSERT(추가), UPDATE(수정), SELECT(추출, 검색), DELETE(삭제)
+   DCL(제어어) - 일관성과 무결성 유지, 병행 수행, 권한 부여/해제 등의 작업을 수행하는 명령어
+		COMMIT, ROLLBACK, GRANT, REVOKE
+- SQL*PLUS 명령어 : 오라클(Oracle)에서만 사용하는 명령어
+
+
+Oracle 접속 : SQL*PLUS 명령어를 이용한 로그인 / 로그인 실패시 해결방법
+- cmd창으로 실습
+   sqlplus - 명령입력시 접속할 계정(id/password)
+   sqlplus 접속 계정/비밀번호
+
+- oracle의 관리자(dba) 계정 : sys, system - 비밀번호(1234)
+
+- 현재 접속된 계정 확인 : show user
+
+- 실습용 게정(scott/1234) 생성
+   반드시 관리자 계정에서 실행한다.
+   기존에 동일한 이름이 존재 할 수 있으므로 삭제부터 진행한다.
+   sql> drop user scott cascade;
+
+   sql> create user scott identified by 1234;
+
+- 실습용 계정에 접속하는 방법
+   반드시 해당 계정에 접속 권한이 존재해야 한다. (관리자 계정에서 실행)
+   sql> grant dba to scott;
+   sql> conn(=connect) scott/1234 
+
+- soctt 계정에 존재하는  테이블 목록 확인(검색, 추출)하는 명령
+   sql> select * from tab(=table);
+
+- 실습용 파일 EMP_EXAMPLE.sql 파일을 오라클 scott 계정에서 실행하는 작업
+   sql>  @@ 해당파일의 경로\파일명.sql
+
+- 특정 테이블의 구조를 확인하는 명령 : desc
+   sql> desc employee
+
+- 각 테이블에 존재하는 레코드를 확인(추출)
+   sql> select * from department;
+          select 필드명(컬럼명)
+          from 테이블명;
+
+- where 조건절 : 주어진 조건에 만족하는 자료만 추출하기 위해 사용하는 옵션
+   조건식 - 조건을 담고 있는 수식으로 반드시 그 결과가 참 또는 거짓으로 판정되어야 한다.
+   사원정보를 담고 있는 테이블(employee)에서 사원번호, 사원명, 급여를 추출하시오.
+   sql> select eno, ename, salary from employee;
+
+   급여가 2000이상인 직원에 번호, 이름, 급여를 추출하시오.
+   sql> select eno, ename, salary 
+          from employee
+          where salary >= 2000;
+
+   1) 산술식/관계식(비교식)/논리식
+       연산자(operand) : 피연산자 사이에 위치한 계산을 수행하는 기호들
+	- 단항 연산자 : 하나의 피연산자를 가지고 있는 수식
+	- 이항 연산자 : 하나 이상의 피연산자를 가지고 있는 수식
+
+       산술연산자 : 사칙연산을 수행하는 연산자 → +, -, *, /
+       관계연산자 : 두 수의 대소관계를 나타내는 연산자 → =, !=, <>, ^=, >, >=, <, <=
+       논리연산자 : 논리값(참, 거짓)을 이용한 연산자, 하나 이상의 관계 연산자를 묶어서 수행하는 연산자
+		and : 그리고, 모두, 논리곱, 교집합
+		or : 또는, 이거나, 혹은, 논리합, 합집합
+		not : 조건에 만족하지 않는 것만 추출, 논리부정, 단항 연산자, 여집합
+

@@ -1,0 +1,95 @@
+2023.07.17 (월)
+
+1. 데이터분석의 첫걸음 - 정형데이터베이스 Oracle / 5days
+   1) 설치파일 : oracle.com
+      - 회원가입 필수
+      - oracle 11g Express Edition 다운로드 및 설치
+      - tool : SQL Developer 다운로드 실행
+
+   2) 데이터베이스(DataBase)
+      data + process = information, 정보처리
+       - 특징(정의) : 집합(통합), 운영(관리), 실시간 접근, 공유
+       - 파일처리시스템의 단점인 중복성과 종속성을 해결
+         중복의 최소화(일관성, 경제성, 보안성, 무결성), 데이터의 독립성 유지
+
+   3) 데이터베이스 관리자(DBSM, Database Managerment System)
+      - 데이터베이스를 구현하기 위해 사용되는 프로그램 또는 시스템을 통칭
+      - R(Relation)DBMS : 관계형 데이터베이스 관리시스템
+        Oracle, MySQL, MSSQL, MariaDB, MongoDB, …….
+      - SQL 질의어(query) : DDL(정의어), DML(조작어), DCL(제어어)
+
+
+2. Oracle Database 설치 및 실행
+   1) DBA(데이터베이스 관리자) : sys, system / 1234
+   2) SQL과 SQL*PLUS
+      - SQL Query(쿼리문, 질의문, SQL 명령어) : 종결자(명령어 문장의 어미, ; <세미콜론>)
+      - SQL*PLUS는 Oracle 안에서만 자체적으로 사용되는 명령어(한 줄 명령어)
+
+   3) SQL Query, 쿼리문 또는 SQL 명령문
+      - 데이터베이스의 자료를 검색하고, 수정하고, 삭제하는 등의 작업을 수행하는 명령어 집합
+      - 모든 관계형 데이터베이스를 처리하기 위해 고안된 언어
+      - 독립적인 문법을 가진 DB 표준 언어이다. <ISO에 의해 지정>
+      - SQL 명령어의 종류
+        ① DDL(데이터 정의어) : 정의 기능, 데이터베이스 구조를 생성, 갱신, 제거하는 명령어들의 집합
+	CREATE(생성), ALTER(변경, 갱신), DROP(제거)
+	create table 테이블이름 ~ ;
+
+        ② DML(데이터 조작어) : 조작 기능, 실제 개발자와 데이터베이스 간에 자료를 조작하는 역할을 수행
+		            레코드 단위(행, Row, Tuple, Record)의 작업을 수행할 때 사용하는 명령어 (열: field, attribute, columm)
+	SELECT(검색, 추출), INSERT(삽입), DELETE(삭제), UPDATE(수정)
+	
+        ③ DCL(데이터 제어어) : TCL(트랜젝션<=하나의 동작으로 수행되는 명령어> 처리어) 포함, 제어기능
+		            일관성 유지, 무결성 처리, 병행수행, 권한 부여/해제 등
+	ROLLBACK(복구), COMMIT(영구저장, 승인, 커밋), REVOKE(권한 해제), GRANT(권한 부여)
+
+   4) SQL*PLUS 로그인 작업 - Oracle 접속(connect, conn)
+      - oracle 데이터 베이스에 접속하기 위해 시스템/사용자 계정(id/password)을 이용한다.
+      - oracle에서 사용하는 계정
+         dba(db 관리자) : sys, system (비밀번호: 1234)
+         scott(교육용 계정) : 처음 오라클을 사용하는 사용자를 위해 만들어 놓은 계정 (비밀번호 : tiger ) - 현재 잠김 계정
+
+      ① oracle 접속할 때 : command(명령어, cmd창)
+          - [시작] - [실행] 메뉴 선택 후 'cmd' 입력
+
+          c:\> or c:￦>sqlplus id/password (=프롬프트)
+          sql>
+
+          c:\> or c:￦>sqlplus
+          Enter User_name =
+          Enter password =
+
+      ② 현재 접속된 사용자 확인하는 명령
+          sql > show user
+
+      ③ 원하는 계정으로 접속하는 명령어
+          sql> connect(or  conn) id/password
+
+      ④ scott 계정이나 hr 계정이 잠겨(락, lock)있는 경우
+          - 반드시 DBA 권한을 가진 계정(sys, system)으로 접속해야 한다.
+	c:\> or c:￦>sqlplus sys/1234
+	sql>
+
+          - scott 계정의 락(lock)을 해제한다.
+	sql> alter user scott account unlock;
+
+          - scott 계정의 비밀번호를 재설정하는 작업을 수행한다.
+             이때, 반드시 관리자 계정(dba - sys, system)에서 진행한다.
+	sql> show user
+	sql> alter user scott identified by tiger;
+
+          - scott 계정에 접속하기 위해서는 접속 권한을 부여해야 한다.
+             반드시 관리자 계정(dba - sys, system)에서 진행한다.
+	sql> grant connect(접속), resource / select, delete to scott;
+	sql> grant dba(모든 권한) to scott;
+
+          - 기존에 존재하는 scott 계정을 삭제할 때(관리자 계정)
+	sql> drop user scott cascade;
+
+          - scott 계정이 존재하지 않는 경우 새롭게 계정을 생성한다.(관리자 계정)
+	sql> create user scott identified by tiger;
+	sql> grant dba to scott;
+	sql> conn scott/tiger
+
+
+3. SQL Developer 다운로드 및 실행
+   - 실습파일을 scott 계정에 실행하여 테이블을 생성하는 작업을 수행한다.
